@@ -173,6 +173,7 @@ public class CTableDepartement {
         return null;
     }
        
+        //Méthode qui permet de supprimer un département
     public int supprimerDepartement(int code) {
       
         String req = "DELETE FROM `departement` WHERE `departement`.`DEP_CODE_DEPARTEMENT`="+code+";";
