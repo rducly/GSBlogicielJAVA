@@ -29,8 +29,7 @@ public class CTableVisiteur {
         
      protected CBDD bdd;
      protected CTableTravail tableTravail;
-
-    //il n'y aura pas d heritage de ce constructeur CTablePersonne donc methode final
+     
      //pour chaque visiteur on a une liste de travail et donc on a besoin d'une reference de la table travail pour charger la liste cTabletravail
     public CTableVisiteur(CBDD bdd, CTableTravail tableTravail) {
         this.setBdd(bdd);

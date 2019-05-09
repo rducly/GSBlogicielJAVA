@@ -11,6 +11,7 @@ import Entite.CSecteur;
 import Entite.CTravail;
 import Entite.CVisiteur;
 import Tables.CTableRegion;
+import Tables.CTableSecteur;
 import Tables.CTableTravail;
 import Tables.CTableVisiteur;
 import Utilitaires.CUtilitaire;
@@ -35,6 +36,8 @@ public class PPE {
         
         CTableRegion tableRegion = new CTableRegion(bdd); 
         
+        CTableSecteur tableSecteur = new CTableSecteur(bdd);
+        
                   
         CVisiteur visiteur = new CVisiteur();        
 
@@ -55,11 +58,11 @@ public class PPE {
        visiteur.setCodePostal("35000");
        visiteur.setVille("Rennes");
        visiteur.setDateEmbauche(CUtilitaire.convertSQLDatetoGregCal("2019-01-01"));
-       
+     */  
          //creation d'objets de type CSecteur
          CSecteur secteur1 = new CSecteur(1,"Nord");
          CSecteur secteur2 = new CSecteur(12,"Nord");
-       
+     /*  
        //si le visiteur est responsable d'un secteur:
        visiteur.setSecteur(secteur2);
        
@@ -118,9 +121,43 @@ public class PPE {
          //TESTS DES METHODES CTableRegion
          
          //Inserer une region dans la table region
+        // CRegion region1 = new CRegion(3, "Pays de Loire", secteur1);
+         //tableRegion.insererRegion(region1);
          
          
+         //Modifier une region dans la table region
+         // CRegion region2 = new CRegion(3, "Pays de la Loire", secteur1);
+         //tableRegion.modifierRegion(region2);
          
+         //lire une region dans la table region qu'on enregistre dans l'objet region2Lu
+         //CRegion region2Lu = tableRegion.lireUneRegion(2);
+         
+          //la methode lireRegions renvoie une liste de regions qu'on enregistre dans l'objet listeRegions
+          //ArrayList<CRegion> listeRegions = tableRegion.lireRegions();
+          
+          //on supprime une region
+          //tableRegion.supprimerRegion(3);
+         
+           //TESTS DES METHODES CTableSecteur
+         
+         //Inserer un secteur dans la table secteur
+       // CSecteur secteur3 = new CSecteur(2, "Sud");
+       // tableSecteur.insererSecteur(secteur3);
+         
+         //Modifier un secteur dans la table secteur
+        // CSecteur secteurAModif = new CSecteur(2,"Ouest");
+        // tableSecteur.modifierSecteur(secteurAModif);
+         
+         //lire un secteur dans la table secteur qu'on enregistre dans l'objet secteur2Lu
+         //CSecteur secteur2Lu = tableSecteur.lireUneSecteur(2);
+         
+          //la methode lireSecteurs renvoie une liste de secteurs qu'on enregistre dans l'objet listeSecteurs
+          //ArrayList<CSecteur> listeSecteurs = tableSecteur.lireSecteurs();
+          
+          //on supprime un secteur
+          //tableSecteur.supprimerSecteur(2);
+         
+          
         System.out.println("hello");
         
         

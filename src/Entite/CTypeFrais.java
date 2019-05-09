@@ -14,15 +14,16 @@ public class CTypeFrais {
 	private int code;
 	private String label;
 	private double forfait;
-	private int inclureQuantite;
-	private double inclureMontant;
+	//private int inclureQuantite;
+	//private double inclureMontant;
 
-	public CTypeFrais(int code, String label, double forfait, int inclureQuantite, double inclureMontant) {
+	public CTypeFrais(int code, String label, double forfait) {
+        //public CTypeFrais(int code, String label, double forfait, int inclureQuantite, double inclureMontant) {
 		this.setCode(code);
 		this.setLabel(label);
 		this.setForfait(forfait);
-		this.setInclureQuantite(inclureQuantite);
-		this.setInclureMontant(inclureMontant);
+		//this.setInclureQuantite(inclureQuantite);
+		//this.setInclureMontant(inclureMontant);
 	}
 	
 	public CTypeFrais(){
@@ -52,7 +53,7 @@ public class CTypeFrais {
 		this.forfait = forfait;
 	}
 
-	public int getInclureQuantite() {
+	/*public int getInclureQuantite() {
 		return inclureQuantite;
 	}
 
@@ -66,5 +67,5 @@ public class CTypeFrais {
 
 	public void setInclureMontant(double inclureMontant) {
 		this.inclureMontant = inclureMontant;
-	}
+	}*/
 }

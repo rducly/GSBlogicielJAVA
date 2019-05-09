@@ -13,27 +13,39 @@ import java.util.GregorianCalendar;
  * @author admin
  */
 public class CFicheFrais {
+        
+        private int idFicheFrais;
 	private int mois;
 	private int nbHorsClassif;
 	private double montantHorsClassif;
 	private String etape;
 	private String matriculeVisiteur;
 	private GregorianCalendar dateDerniereModif;
-	private ArrayList<CTypeFrais> listeTypeFrais;
+	private ArrayList<CFrais> listeFrais;
 
-	public CFicheFrais(int mois, int nbHorsClassif, double montantHorsClassif, String etape, String matriculeVisiteur, GregorianCalendar dateDerniereModif, ArrayList<CTypeFrais> listeTypeFrais) {
-		this.setMois(mois);
+	public CFicheFrais(int idFicheFrais, int mois, int nbHorsClassif, double montantHorsClassif, String etape, String matriculeVisiteur, GregorianCalendar dateDerniereModif, ArrayList<CFrais> listeFrais) {
+		this.setIdFicheFrais(idFicheFrais);
+                this.setMois(mois);
 		this.setNbHorsClassif(nbHorsClassif);
 		this.setMontantHorsClassif(montantHorsClassif);
 		this.setEtape(etape);
 		this.setMatriculeVisiteur(matriculeVisiteur);
 		this.setDateDerniereModif(dateDerniereModif);
-		this.setListeTypeFrais(listeTypeFrais);
+		this.setListeFrais(listeFrais);
 	}
 	
 	public CFicheFrais(){
 	}
 	
+        
+        public int getIdFicheFrais() {
+            return idFicheFrais;
+        }
+
+         public void setIdFicheFrais(int idFicheFrais) {
+            this.idFicheFrais = idFicheFrais;
+         }
+        
 	public int getMois() {
 		return mois;
 	}
@@ -82,11 +94,11 @@ public class CFicheFrais {
 		this.dateDerniereModif = dateDerniereModif;
 	}
 	
-	public ArrayList<CTypeFrais> getListeTypeFrais() {
-		return listeTypeFrais;
+	public ArrayList<CFrais> getListeFrais() {
+		return listeFrais;
 	}
 
-	public void setListeTypeFrais(ArrayList<CTypeFrais> listeTypeFrais) {
-		this.listeTypeFrais = listeTypeFrais;
+	public void setListeFrais(ArrayList<CFrais> listeFrais) {
+		this.listeFrais = listeFrais;
 	}
 }
