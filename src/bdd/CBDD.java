@@ -58,6 +58,8 @@ public class CBDD {
         }
     }
 
+    
+    
    public static boolean testerConnexion(String nomFichierProperties) {
         CBDD bdd = new CBDD(new CParametresStockageBDD(nomFichierProperties));
         if (bdd.connecter() == true) {

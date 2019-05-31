@@ -6,18 +6,27 @@
 package ppe;
 
 import Entite.CDepartement;
+import Entite.CFicheFrais;
+import Entite.CFrais;
 import Entite.CRegion;
 import Entite.CSecteur;
 import Entite.CTravail;
+import Entite.CTypeFrais;
 import Entite.CVisiteur;
+import Tables.CTableFicheFrais;
+import Tables.CTableFrais;
 import Tables.CTableRegion;
 import Tables.CTableSecteur;
 import Tables.CTableTravail;
+import Tables.CTableTypeFrais;
 import Tables.CTableVisiteur;
 import Utilitaires.CUtilitaire;
 import bdd.CBDD;
 import bdd.CParametresStockageBDD;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 
 /**
  *
@@ -38,39 +47,46 @@ public class PPE {
         
         CTableSecteur tableSecteur = new CTableSecteur(bdd);
         
+        CTableTypeFrais tableTypeFrais = new CTableTypeFrais(bdd);
+        
+        CTableFrais tableFrais = new CTableFrais(bdd);
+        
+        CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
+        
+        
                   
         CVisiteur visiteur = new CVisiteur();        
 
         
 
        
- /*
+ 
         //Test methode insererVisiteur
        
         //on crée un nouvel utilisateur de type CVisiteur(String matricule,
         //String nom, String prenom, String adresse, String codePostal, 
         //String ville, GregorianCalendar dateEmbauche, CSecteur secteur,
         //ArrayList<CTravail> listeTravail, CDepartement departement)
-       visiteur.setMatricule("1718");
-       visiteur.setNom("TOM");
-       visiteur.setPrenom("Olivier");
+ /*      visiteur.setMatricule("1750");
+       visiteur.setNom("FABIEN");
+       visiteur.setPrenom("Fabrice");
        visiteur.setAdresse("12 rue du paradis");
        visiteur.setCodePostal("35000");
        visiteur.setVille("Rennes");
-       visiteur.setDateEmbauche(CUtilitaire.convertSQLDatetoGregCal("2019-01-01"));
-     */  
+       visiteur.setDateEmbauche(CUtilitaire.convertSQLDatetoGregCal("2019-01-05"));
+     
          //creation d'objets de type CSecteur
          CSecteur secteur1 = new CSecteur(1,"Nord");
          CSecteur secteur2 = new CSecteur(12,"Nord");
-     /*  
+      
        //si le visiteur est responsable d'un secteur:
        visiteur.setSecteur(secteur2);
-       
+      
           //on ajoute une liste de travails concernant ce matricule:
          ArrayList<CTravail> listeTravails = new ArrayList(); //creation d'une liste de travails
          //on ajoute à la liste de travail 2 objets de type CTravail 
          listeTravails.add(new CTravail("Responsable", CUtilitaire.convertSQLDatetoGregCal("2019-03-11"),new CRegion(1,"bretagne", secteur1)));
-         listeTravails.add(new CTravail("Visiteur", CUtilitaire.convertSQLDatetoGregCal("2019-03-30"),new CRegion(2,"Normandie", secteur2)));
+          listeTravails.add(new CTravail("Visiteur", CUtilitaire.convertSQLDatetoGregCal("2019-03-30"),new CRegion(2,"Normandie", secteur2)));
        visiteur.setListeTravail(listeTravails);
        
        visiteur.setDepartement(new CDepartement(1, "Swiss", true));
@@ -79,10 +95,26 @@ public class PPE {
        //test de la methode insererVisiteur pour inserer l'objet visiteur dans ma table visiteur
         tableVisiteur.insererVisiteur(visiteur);
 */
+     
+    // int matriculeVisiteur = tableVisiteur.insererVisiteur(visiteur);
+
+  /*        for (int i = 0; i < size(listeTravails); i++) {
+              
+          }
+     foreach(workList as work) {
+         $dateID = tableDate.insererDate(work.date);
+         $regionID = tableRegion.insertOrUpdateRegion(work.regionNumber);
+         tableTravailler.insererTravail($regionID, $dateId, $matriculeID, ...);   
+      }
+   
+     
+     */
+     
+     
 
 
  /*
-        //test pour la méthode supprimerVisiteur
+        //test pour la méthode supprimerVisiteurTr
         tableVisiteur.supprimerVisiteur(new CVisiteur("1718"));
  */
  
@@ -158,10 +190,45 @@ public class PPE {
           //tableSecteur.supprimerSecteur(2);
          
           
+         // test inserer , modifier , supprimer type de frais
+         // CTypeFrais typeFrais1 = new CTypeFrais("hebergement", 40.8);
+          //tableTypeFrais.insererTypeFrais(typeFrais1);
+          //CTypeFrais typeFrais2 = new CTypeFrais( "repas", 20.5);
+          //tableTypeFrais.insererTypeFrais(typeFrais2);
+          
+         //CTypeFrais typeFrais2 = new CTypeFrais(1, "hebergement", 45.8);
+          //tableTypeFrais.modifierTypeFrais(typeFrais2);
+          
+          //tableTypeFrais.supprimerTypeFrais(new CTypeFrais(1));
+          
+          //test lire type frais
+         // CTypeFrais typeFraisLu  = tableTypeFrais.lireUnTypeFrais(1);
+          
+        
+        // test inserer , modifier , supprimer frais
+           CTypeFrais typeFrais1 = new CTypeFrais(2,"hebergement", 40.8);
+          CFrais frais1 = new CFrais(2,50.3,typeFrais1);
+          //tableFrais.insererFrais(frais1);
+        
+        
+        
+        
+        //test inserer , modifier, supprimer ficheFrais
+          ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
+          listeFrais.add(frais1);
+         
+          
+        CFicheFrais ficheFrais1 = new CFicheFrais(2,0,0,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-05-27"), listeFrais);
+        
+        
+        //tableFicheFrais.insererFicheFrais(ficheFrais1);
+        CFicheFrais ficheFrais2 = new CFicheFrais(2,2,2,50,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-05-27"), listeFrais);
+        //tableFicheFrais.modifierFicheFrais(ficheFrais2);
+       
+        tableFicheFrais.supprimerFicheFrais(ficheFrais2.getIdFicheFrais());
+        
+        
         System.out.println("hello");
-        
-        
-
         
         
     }

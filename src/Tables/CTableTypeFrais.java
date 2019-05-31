@@ -56,10 +56,10 @@ public class CTableTypeFrais {
 
     public int insererTypeFrais(CTypeFrais typeFrais) {
   
-        
-        String req = "INSERT INTO `type_frais` (`TF_CODE_TYPE_FRAIS`, `TF_LIBELLE_TYPE_FRAIS`, `TF_FORFAIT_TYPE_FRAIS`) "
+        String req = "INSERT INTO `type_frais` (`TF_LIBELLE_TYPE_FRAIS`, `TF_FORFAIT_TYPE_FRAIS`) "
+        //String req = "INSERT INTO `type_frais` (`TF_CODE_TYPE_FRAIS`, `TF_LIBELLE_TYPE_FRAIS`, `TF_FORFAIT_TYPE_FRAIS`) "
                 + "VALUES ('"
-                + typeFrais.getCode() + "', '"
+               // + typeFrais.getCode() + "', '"
                 + typeFrais.getLabel() + "', "
                 + typeFrais.getForfait() + ");";
                 

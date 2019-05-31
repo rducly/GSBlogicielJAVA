@@ -34,6 +34,17 @@ public class CFicheFrais {
 		this.setListeFrais(listeFrais);
 	}
 	
+        public CFicheFrais(int mois, int nbHorsClassif, double montantHorsClassif, String etape, String matriculeVisiteur, GregorianCalendar dateDerniereModif, ArrayList<CFrais> listeFrais) {
+		
+                this.setMois(mois);
+		this.setNbHorsClassif(nbHorsClassif);
+		this.setMontantHorsClassif(montantHorsClassif);
+		this.setEtape(etape);
+		this.setMatriculeVisiteur(matriculeVisiteur);
+		this.setDateDerniereModif(dateDerniereModif);
+		this.setListeFrais(listeFrais);
+	}
+        
 	public CFicheFrais(){
 	}
 	

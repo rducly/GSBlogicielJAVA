@@ -59,14 +59,14 @@ public class CTableFicheFrais {
         Date dateDerniereModif = new Date(FicheFrais.getDateDerniereModif().getTimeInMillis());
         
         
-        String req = "INSERT INTO `fiche_frais` (`FF_MOIS_FICHE_FRAIS`,`FF_NBHorsClassif_FICHE_FRAIS`, `F_MontantHorsClassif_FICHE_FRAIS`, `VIS_MATRICULE_VISITEUR`,`FF_ETAPE_FICHE_FRAS`, `FF_DateDerniereModif_Fiche_Frais`) "
+        String req = "INSERT INTO `fiche_frais` (`FF_MOIS_FICHE_FRAIS`,`FF_NBHorsClassif_FICHE_FRAIS`, `FF_MontantHorsClassif_FICHE_FRAIS`, `VIS_MATRICULE_VISITEUR`,`FF_ETAPE_FICHE_FRAIS`, `FF_DateDerniereModif_Fiche_Frais`) "
                 + "VALUES ('"
                 + FicheFrais.getMois() + "', '"
                 + FicheFrais.getNbHorsClassif() + "', '"
                 + FicheFrais.getMontantHorsClassif() + "', '"
                 + FicheFrais.getMatriculeVisiteur() + "', '"
-                + FicheFrais.getEtape() + "', "
-                + dateDerniereModif  + ");";
+                + FicheFrais.getEtape() + "', '"
+                + dateDerniereModif  + "');";
                 
         int res = -1;
         if (bdd.connecter() == true) {
@@ -88,15 +88,15 @@ public class CTableFicheFrais {
                 + FicheFrais.getMois()
                 +"', `FF_NBHorsClassif_FICHE_FRAIS` = '"
                 + FicheFrais.getNbHorsClassif()
-                +"', `F_MontantHorsClassif_FICHE_FRAIS` = '"
+                +"', `FF_MontantHorsClassif_FICHE_FRAIS` = '"
                 + FicheFrais.getMontantHorsClassif()
                 +"', `VIS_MATRICULE_VISITEUR` = '"
                 + FicheFrais.getMatriculeVisiteur()
-                +"', `FF_ETAPE_FICHE_FRAS` = '"
+                +"', `FF_ETAPE_FICHE_FRAIS` = '"
                 + FicheFrais.getEtape()
                 +"', `FF_DateDerniereModif_Fiche_Frais` = '"
                 + dateDerniereModif
-                + " WHERE `fiche_frais`.`FF_ID_FICHE_FRAIS` =  "
+                + "' WHERE `fiche_frais`.`FF_ID_FICHE_FRAIS` =  "
                 + FicheFrais.getIdFicheFrais() + ";";
             
         int res = -1;
@@ -117,7 +117,7 @@ public class CTableFicheFrais {
             int idFicheFrais =  rs.getInt("FF_ID_FICHE_FRAIS");
             int mois  = rs.getInt("FF_MOIS_FICHE_FRAIS");
             int nbHorsClassif = rs.getInt("FF_NBHorsClassif_FICHE_FRAIS");
-            double montantHorsClassif = rs.getFloat("F_MontantHorsClassif_FICHE_FRAIS");
+            double montantHorsClassif = rs.getFloat("FF_MontantHorsClassif_FICHE_FRAIS");
             String matriculeVisiteur = rs.getString("VIS_MATRICULE_VISITEUR");
             String etape = rs.getString("FF_ETAPE_FICHE_FRAIS");
             String dateDerniereModif = rs.getString("FF_DateDerniereModif_Fiche_Frais");

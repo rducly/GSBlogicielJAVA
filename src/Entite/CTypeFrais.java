@@ -26,6 +26,15 @@ public class CTypeFrais {
 		//this.setInclureMontant(inclureMontant);
 	}
 	
+        public CTypeFrais( String label, double forfait) {
+		this.setLabel(label);
+		this.setForfait(forfait);
+	}
+        
+        public CTypeFrais(int code) {
+		this.setCode(code);
+        }
+        
 	public CTypeFrais(){
 	}
 	
