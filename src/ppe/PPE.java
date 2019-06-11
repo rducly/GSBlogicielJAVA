@@ -13,6 +13,10 @@ import Entite.CSecteur;
 import Entite.CTravail;
 import Entite.CTypeFrais;
 import Entite.CVisiteur;
+import IHM.JFrameAccueil;
+import IHM.JFrameConnexion;
+import IHM.JFrameDeclarerFicheFrais;
+import Metier.CMetierFicheFrais;
 import Tables.CTableFicheFrais;
 import Tables.CTableFrais;
 import Tables.CTableRegion;
@@ -33,10 +37,13 @@ import java.util.GregorianCalendar;
  * @author admin
  */
 public class PPE {
+    
+    static CBDD bdd;
+    
       public static void main(String[] args) {
           
           //creation d'un objet pour avoir accès à la base de donnée
-          CBDD bdd=new CBDD(new CParametresStockageBDD("parametresBdd.properties"));
+          bdd=new CBDD(new CParametresStockageBDD("parametresBdd.properties"));
          
           CTableTravail tableTravail = new CTableTravail(bdd); 
           
@@ -53,12 +60,28 @@ public class PPE {
         
         CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
         
+        CMetierFicheFrais  metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais);
+        
+         JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais();
+         
+        JFrameAccueil jFrameAccueil = new JFrameAccueil(jFrameDeclarerFicheFrais, metierFicheFrais);
+        
+        JFrameConnexion jFrameConnexion = new JFrameConnexion(jFrameAccueil, metierFicheFrais); 
+        
         
                   
         CVisiteur visiteur = new CVisiteur();        
 
+        jFrameConnexion.setVisible(true);
         
-
+       // metierFicheFrais.setTableTypeFrais(tableTypeFrais);
+        
+       
+        
+        
+        
+        
+        
        
  
         //Test methode insererVisiteur
@@ -136,8 +159,8 @@ public class PPE {
        
        
        //on creer un nouveau travail pour un visiteur donné(matricule)
-      // CTravail travailNouveau = new CTravail("visiteur",CUtilitaire.convertSQLDatetoGregCal("2018-11-01"), new CRegion(2) );
-       //tableTravail.insererTravail(travailNouveau, "1234" );
+      // CTravail travailNouveau = new CTravail("visiteur",CUtilitaire.convertSQLDatetoGregCal("2019-05-20"), new CRegion(2) );
+      // tableTravail.insererTravail(travailNouveau, "1234" );
        
        
         //on modifie le role d'un travail donné
@@ -149,6 +172,9 @@ public class PPE {
          
          //on supprime un travail donné
          //tableTravail.supprimerTravail(2, "2018-11-01", "1234");
+         
+         //on lit tous les travails d un matricule donné
+         //ArrayList<CTravail> listeTravails = tableTravail.fetchTravails("1234");
        
          //TESTS DES METHODES CTableRegion
          
@@ -206,28 +232,36 @@ public class PPE {
           
         
         // test inserer , modifier , supprimer frais
-           CTypeFrais typeFrais1 = new CTypeFrais(2,"hebergement", 40.8);
-          CFrais frais1 = new CFrais(2,50.3,typeFrais1);
-          //tableFrais.insererFrais(frais1);
+         //  CTypeFrais typeFrais1 = new CTypeFrais(2,"hebergement", 40.8);
+         // CFrais frais1 = new CFrais(4,3,18.3,typeFrais1);
+         // tableFrais.insererFrais(frais1);
         
         
         
         
         //test inserer , modifier, supprimer ficheFrais
-          ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
-          listeFrais.add(frais1);
+        //  ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
+          //listeFrais.add(frais1);
          
           
-        CFicheFrais ficheFrais1 = new CFicheFrais(2,0,0,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-05-27"), listeFrais);
+       // CFicheFrais ficheFrais1 = new CFicheFrais(3,4,20,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-05-27"), listeFrais);
         
         
-        //tableFicheFrais.insererFicheFrais(ficheFrais1);
-        CFicheFrais ficheFrais2 = new CFicheFrais(2,2,2,50,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-05-27"), listeFrais);
+       // tableFicheFrais.insererFicheFrais(ficheFrais1);
+        
+        
+       // insertion avec l'id fichefrais
+        //CFicheFrais ficheFrais2 = new CFicheFrais(2,2,2,50,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-05-27"), listeFrais);
         //tableFicheFrais.modifierFicheFrais(ficheFrais2);
        
-        tableFicheFrais.supprimerFicheFrais(ficheFrais2.getIdFicheFrais());
-        
-        
+        //tableFicheFrais.supprimerFicheFrais(ficheFrais2.getIdFicheFrais());
+        //tableFicheFrais.supprimerFicheFrais(7);
+       //ArrayList<CFicheFrais> listeFicheFrais = tableFicheFrais.fetchFichesFrais("1234");
+        //ArrayList<CTravail> listeTravails = tableTravail.fetchTravails("1234");
+        //CFicheFrais FicheFraisFevrier = tableFicheFrais.lireUneFicheFraisMois("1234", 2);
+        //CFicheFrais FicheFraisJanvier = tableFicheFrais.lireUneFicheFraisMois("1234", 1);
+        //CFicheFrais FicheFraisId = tableFicheFrais.lireUneFicheFrais(2);
+        //String[] tab1 = metierFicheFrais.listeMois("1234");
         System.out.println("hello");
         
         

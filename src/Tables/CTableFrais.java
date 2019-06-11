@@ -52,10 +52,10 @@ public class CTableFrais {
 
     public int insererFrais(CFrais frais) {
        
-         String req = "INSERT INTO `inclure` (`TF_CODE_TYPE_FRAIS`, `INC_QTE_INCLURE`, `INC_MONTANT_INCLURE`) "
-       // String req = "INSERT INTO `inclure` (`FF_ID_FICHE_FRAIS`,`TF_CODE_TYPE_FRAIS`, `INC_QTE_INCLURE`, `INC_MONTANT_INCLURE`) "
+         //String req = "INSERT INTO `inclure` (`TF_CODE_TYPE_FRAIS`, `INC_QTE_INCLURE`, `INC_MONTANT_INCLURE`) "
+       String req = "INSERT INTO `inclure` (`FF_ID_FICHE_FRAIS`,`TF_CODE_TYPE_FRAIS`, `INC_QTE_INCLURE`, `INC_MONTANT_INCLURE`) "
                 + "VALUES ("
-                //+ frais.getIdFicheFrais() + ", "
+                + frais.getIdFicheFrais() + ", "
                 + frais.getTypeFrais().getCode() + ", "
                 + frais.getQuantite() + ", "
                 + frais.getMontant() + ");";

@@ -24,11 +24,11 @@ public class CFrais {
        this.typeFrais = typeFrais;
     }
     
-     public CFrais( int quantite, double montant, CTypeFrais typeFrais) {
+    /* public CFrais( int quantite, double montant, CTypeFrais typeFrais) {
        this.quantite = quantite;
        this.montant = montant;
        this.typeFrais = typeFrais;
-    }
+    }*/
     
     public int getIdFicheFrais() {
         return idFicheFrais;

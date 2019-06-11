@@ -56,6 +56,7 @@ public class CTableFicheFrais {
 
 
     public int insererFicheFrais(CFicheFrais FicheFrais) {
+        /*lecture id*/
         Date dateDerniereModif = new Date(FicheFrais.getDateDerniereModif().getTimeInMillis());
         
         
@@ -76,6 +77,14 @@ public class CTableFicheFrais {
         } else {
             System.out.println("Connexion KO");
         }
+        
+        /*lecture id =idFF
+        
+        for (int i = 0; i < FicheFrais.getListeFrais().size(); i++) {
+            FicheFrais.getListeFrais().get(i).setIdFicheFrais(idFF);
+            this.tableFrais.insererFrais(FicheFrais.getListeFrais().get(i));
+        }
+        */
         return res;
     }
 
@@ -123,10 +132,10 @@ public class CTableFicheFrais {
             String dateDerniereModif = rs.getString("FF_DateDerniereModif_Fiche_Frais");
             GregorianCalendar dateDerniereModifGC = CUtilitaire.convertSQLDatetoGregCal(dateDerniereModif);
         
-            //on recupere la liste de frais concernant un FicheFrais
+            //on recupere la liste de frais concernant une FicheFrais
             ArrayList<CFrais> listeFrais = tableFrais.fetchFrais(idFicheFrais);
        
-            return new CFicheFrais(idFicheFrais,mois,nbHorsClassif, montantHorsClassif, matriculeVisiteur, etape, dateDerniereModifGC, listeFrais);
+            return new CFicheFrais(idFicheFrais, mois, nbHorsClassif, montantHorsClassif, etape, matriculeVisiteur, dateDerniereModifGC, listeFrais);
         } catch (SQLException ex) {
             Logger.getLogger(CFicheFrais.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -154,10 +163,36 @@ public class CTableFicheFrais {
 
    
    //methode qui permet d'avoir la liste de toutes les fiches de frais d'un visiteur (matricule)
-    public ArrayList<CFicheFrais> fetchTravails(String matricule) {
+    public ArrayList<CFicheFrais> fetchFichesFrais(String matricule) {
         if (bdd.connecter() == true) {
             ArrayList<CFicheFrais> liste = new ArrayList();
-            ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais` WHERE `fiche_frais`.VIS_MATRICULE_VISITEUR="+matricule+" AND `fiche_frais`.`FF_ID_FICHE_FRAIS` = `inclure`.`FF_ID_FICHE_FRAIS` AND `inclure`.`TF_CODE_TYPE_FRAIS`= `type_frais`.`TF_CODE_TYPE_FRAIS` ;");
+            ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais` WHERE fiche_frais.VIS_MATRICULE_VISITEUR="+ matricule +" AND fiche_frais.FF_ID_FICHE_FRAIS=inclure.FF_ID_FICHE_FRAIS AND inclure.TF_CODE_TYPE_FRAIS=type_frais.TF_CODE_TYPE_FRAIS ;");
+            try {
+                while (rs.next()) {
+                   CFicheFrais FicheFrais = convertir_RS_FicheFrais(rs);
+                    liste.add(FicheFrais);
+                }
+            } catch (SQLException ex) {
+            }
+            bdd.deconnecter();
+           
+            
+            return liste;
+        } else {
+            System.out.println("Connexion KO");
+        }
+        return null;
+    }
+    
+    
+    
+    
+    
+      //methode qui permet d'avoir la liste de toutes les fiches de frais d'un visiteur (matricule)
+    public ArrayList<CFicheFrais> fetchTravailsMois(String matricule, int mois) {
+        if (bdd.connecter() == true) {
+            ArrayList<CFicheFrais> liste = new ArrayList();
+            ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais` WHERE fiche_frais.FF_MOIS_FICHE_FRAIS="+mois+" AND fiche_frais.VIS_MATRICULE_VISITEUR="+matricule+" AND fiche_frais.FF_ID_FICHE_FRAIS=inclure.FF_ID_FICHE_FRAIS AND inclure.TF_CODE_TYPE_FRAIS=type_frais.TF_CODE_TYPE_FRAIS ;");
             try {
                 while (rs.next()) {
                    CFicheFrais FicheFrais = convertir_RS_FicheFrais(rs);
@@ -205,6 +240,34 @@ public class CTableFicheFrais {
         FicheFrais.setIdFicheFrais(-1);
         
        ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais`  WHERE `fiche_frais`.`FF_ID_FICHE_FRAIS`=" + idFicheFrais + " AND `fiche_frais`.`FF_ID_FICHE_FRAIS` = `inclure`.`FF_ID_FICHE_FRAIS` AND `inclure`.`TF_CODE_TYPE_FRAIS`= `type_frais`.`TF_CODE_TYPE_FRAIS`;"); 
+       
+            try {
+                //lit chaque ligne qu'on a récuperer
+                while (rs.next()) {
+                    //il enregistre la ligne trouvé dans l'objet FicheFrais
+                    FicheFrais = convertir_RS_FicheFrais(rs);
+                }
+            } catch (SQLException ex) {
+            }
+            bdd.deconnecter();
+            return FicheFrais;
+        } else {
+            System.out.println("Connexion KO");
+        }
+        return null;
+    }
+        
+        
+        // methode qui permet de lire une fiche frais d'un visiteur (matricule) pour un mois donné
+        // dans la BDD il est sauvegardé que les fiches des 12 derniers mois
+                public CFicheFrais lireUneFicheFraisMois(String matricule, int mois) {
+        if (bdd.connecter() == true) {
+        CFicheFrais FicheFrais = new CFicheFrais();
+        //Le FicheFrais est initialisé à null au cas où le FicheFrais n'a pas été trouvé (FicheFrais = null)
+        //CFicheFrais FicheFrais = null;
+        FicheFrais.setIdFicheFrais(-1);
+        
+       ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais` WHERE `fiche_frais`.FF_MOIS_FICHE_FRAIS="+mois+" AND `fiche_frais`.VIS_MATRICULE_VISITEUR="+matricule+" AND `fiche_frais`.`FF_ID_FICHE_FRAIS` = `inclure`.`FF_ID_FICHE_FRAIS` AND `inclure`.`TF_CODE_TYPE_FRAIS`= `type_frais`.`TF_CODE_TYPE_FRAIS` ;"); 
        
             try {
                 //lit chaque ligne u'on a récuperer

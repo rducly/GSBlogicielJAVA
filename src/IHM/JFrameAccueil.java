@@ -5,70 +5,97 @@
  */
 package IHM;
 
+import Entite.CFicheFrais;
+import Entite.CFrais;
+import Metier.CMetierFicheFrais;
+import Tables.CTableFicheFrais;
+import Tables.CTableFrais;
+import Tables.CTableRegion;
+import Tables.CTableSecteur;
+import Tables.CTableTravail;
+import Tables.CTableTypeFrais;
+import Tables.CTableVisiteur;
+import bdd.CBDD;
+import bdd.CParametresStockageBDD;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author admin
  */
 public class JFrameAccueil extends JFrame {
 
- // private JPanel container = new JPanel();
-//  private JComboBox combo = new JComboBox();
-//  private JLabel label = new JLabel("Une ComboBox");
+    // declaration des attributs
+    protected CBDD bdd;
+    protected CTableSecteur tableSecteur;
+    protected CTableTypeFrais tableTypeFrais;
+    protected CTableFrais tableFrais;
+    protected CTableFicheFrais tableFicheFrais;
+    protected CMetierFicheFrais metierFicheFrais;
+    protected JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais;
     
+    public void setjFrameDeclarerFicheFrais(JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais) {
+        this.jFrameDeclarerFicheFrais = jFrameDeclarerFicheFrais;
+    }
+    
+
+    public CMetierFicheFrais getMetierFicheFrais() {
+        return metierFicheFrais;
+    }
+
+    public void setMetierFicheFrais(CMetierFicheFrais metierFicheFrais) {
+        this.metierFicheFrais = metierFicheFrais;
+    }
+
     /**
      * Creates new form JFrameAccueil
      */
-    public JFrameAccueil() {
+    public JFrameAccueil(JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais, CMetierFicheFrais metierFicheFrais) {
+        this.setjFrameDeclarerFicheFrais(jFrameDeclarerFicheFrais);
+        this.setMetierFicheFrais(metierFicheFrais);
+
         initComponents();
-        //jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"}));
-        String[] tab = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
-        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(tab));
-        
-        //Si on veut changer le titre de la fenetre
-        //this.setTitle("Animation");
-         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //quitte frame lors fermeture
+       
+        // insertion des valeurs (mois)dans la comboBox
+        // String[] tab = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
+        //  jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(tab));
+
+        // on récupère la liste des mois (où on a une fiche frais) correspondant au matricule choisis
+        //String[] tableauMois = metierFicheFrais.listeMois(this.jTextFieldMatricule.getText());
+        String[] tableauMois = this.metierFicheFrais.listeMois("1234");
+        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(tableauMois));
+
+        // on modifie le titre de la fenetre
+        this.setTitle("Accueil - Rechercher une fiche de frais");
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //quitte frame lors fermeture
+
     }
- 
-    
 
-  /*  private void inutCombo {
-          //this.setTitle("Animation");
-       // this.setSize(300, 100);
-       // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // this.setLocationRelativeTo(null);
-       // container.setBackground(Color.white);
-       // container.setLayout(new BorderLayout());
-        //combo.setPreferredSize(new Dimension(100, 20));
-        String[] tab = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
-        combo = new JComboBox(tab);
-
-        JPanel top = new JPanel();
-        top.add(label);
-        top.add(combo);
-        container.add(top, BorderLayout.NORTH);
-        //this.setContentPane(container);
-        //this.setVisible(true);    
-}
-    */
-     public void paint(Graphics g) {
+    // pour dessiner une ligne sur l'interface graphique
+    public void paint(Graphics g) {
         super.paint(g);  // fixes the immediate problem.
         Graphics2D g2 = (Graphics2D) g;
         Line2D lin = new Line2D.Float(80, 100, 750, 100);
         g2.draw(lin);
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,6 +122,9 @@ public class JFrameAccueil extends JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextFieldDateDerniereModif = new javax.swing.JTextField();
+        jLabelDate = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableHorsClassif = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +150,11 @@ public class JFrameAccueil extends JFrame {
         });
 
         jButtonValider.setText("Valider");
+        jButtonValider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonValiderActionPerformed(evt);
+            }
+        });
 
         jButtonModifier.setText("Modifier");
 
@@ -131,10 +166,20 @@ public class JFrameAccueil extends JFrame {
         });
 
         jButtonNouvelleFiche.setText("Nouvelle Fiche");
+        jButtonNouvelleFiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNouvelleFicheActionPerformed(evt);
+            }
+        });
 
         jLabelEtatFicheFrais.setText("Etat de la fiche de frais : ");
 
         jTextFieldEtatFicheFrais.setEditable(false);
+        jTextFieldEtatFicheFrais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldEtatFicheFraisActionPerformed(evt);
+            }
+        });
 
         jLabelDateDerniereModif.setText("Date de dernière modification : ");
 
@@ -159,12 +204,41 @@ public class JFrameAccueil extends JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jTextFieldDateDerniereModif.setEditable(false);
+
+        jTableHorsClassif.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nombre Hors Classification", "Montant Hors Classification"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableHorsClassif);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(619, 619, 619))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,14 +253,8 @@ public class JFrameAccueil extends JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldEtatFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelTitreConsulterFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(339, 339, 339)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelTitreConsulterFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -194,8 +262,7 @@ public class JFrameAccueil extends JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButtonSupprimer)
                             .addGap(18, 18, 18)
-                            .addComponent(jButtonNouvelleFiche)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonNouvelleFiche))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelDateDerniereModif, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -204,15 +271,19 @@ public class JFrameAccueil extends JFrame {
                         .addComponent(jLabelMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jTextFieldDateDerniereModif, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldDateDerniereModif, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(296, 296, 296))
             .addGroup(layout.createSequentialGroup()
                 .addGap(225, 225, 225)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -245,20 +316,24 @@ public class JFrameAccueil extends JFrame {
                             .addComponent(jButtonModifier)
                             .addComponent(jButtonSupprimer)
                             .addComponent(jButtonNouvelleFiche))
-                        .addGap(53, 53, 53)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelDateDerniereModif)
                             .addComponent(jTextFieldDateDerniereModif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(49, 49, 49)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNomVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomVisiteurActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextFieldNomVisiteurActionPerformed
 
     private void jComboBoxMoisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMoisActionPerformed
@@ -267,8 +342,51 @@ public class JFrameAccueil extends JFrame {
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
         // TODO add your handling code here:
-        this.jTextFieldNomVisiteur.setText("Nom du visiteur:");
+        // this.jTextFieldNomVisiteur.setText("Nom du visiteur:");
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
+
+    private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
+        // metier.valider(this.jTextFieldMatricule.getText(),this.jComboBoxMois.getSelectedItem(),this.jTable1);              
+
+        // on récupère la fiche frais de type CFicheFrais correspondant au matricule et mois choisis
+        ArrayList<CFicheFrais> list = metierFicheFrais.valider(this.jTextFieldMatricule.getText(), this.jComboBoxMois.getSelectedIndex());
+
+        //pour afficher l'etape de la fiche de frais dans le champ EtatFicheFrais
+        jTextFieldEtatFicheFrais.setText(list.get(0).getEtape());
+
+        // Pour afficher la date, on transforme le format date gregorian calendar au format dd/MM/yyyy
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        jTextFieldDateDerniereModif.setText(dateFormat.format(list.get(0).getDateDerniereModif().getTime()));
+
+        // On ajoute les Type de frais , quantité et montant forfaitisé dans la jTable1, de la liste de frais correspondant à cette fiche de frais
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // on supprime les lignes existentes de la jTable1 sauf l'entête
+        list.get(0).getListeFrais().forEach((frais) -> {
+            model.addRow(new Object[]{
+                frais.getTypeFrais().getLabel(), frais.getQuantite(), frais.getMontant()});
+        });
+
+        // On ajoute le Nombre Hors classification et le montant Hors classification dans la jTableHorsClassif, de la fiche de frais
+        DefaultTableModel model2 = (DefaultTableModel) jTableHorsClassif.getModel();
+        model2.setRowCount(0); // on supprime les lignes existentes de la jTableHorsClassif sauf l'entête
+        // on insere la ligne dans jTableHorsClassif
+        model2.addRow(new Object[]{
+            list.get(0).getNbHorsClassif(), list.get(0).getMontantHorsClassif()});
+
+
+    }//GEN-LAST:event_jButtonValiderActionPerformed
+
+    private void jTextFieldEtatFicheFraisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEtatFicheFraisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldEtatFicheFraisActionPerformed
+
+    private void jButtonNouvelleFicheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNouvelleFicheActionPerformed
+         this.jFrameDeclarerFicheFrais.getjTextFieldMatricule().setText(this.metierFicheFrais.getMatricule());
+      this.jFrameDeclarerFicheFrais.getjTextFieldNomVisiteur().setText(this.metierFicheFrais.getNomVisiteur());
+   
+      this.jFrameDeclarerFicheFrais.setVisible(true);
+        
+    }//GEN-LAST:event_jButtonNouvelleFicheActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,7 +418,20 @@ public class JFrameAccueil extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameAccueil().setVisible(true);
+                // instanciation des objets
+                CBDD bdd = new CBDD(new CParametresStockageBDD("parametresBdd.properties"));
+                CTableTypeFrais tableTypeFrais = new CTableTypeFrais(bdd);
+                CTableFrais tableFrais = new CTableFrais(bdd);
+                CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
+                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais);
+                 JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais();
+                JFrameAccueil jFrameAccueil = new JFrameAccueil(jFrameDeclarerFicheFrais, metierFicheFrais);
+                // jFrameAccueil.bdd=new CBDD(new CParametresStockageBDD("parametresBdd.properties"));
+
+                // jFrameAccueil.tableTypeFrais = new CTableTypeFrais(jFrameAccueil.bdd);
+                // jFrameAccueil.tableFrais = new CTableFrais(jFrameAccueil.bdd);
+                // jFrameAccueil.tableFicheFrais = new CTableFicheFrais(jFrameAccueil.bdd, jFrameAccueil.tableFrais);
+                jFrameAccueil.setVisible(true);
             }
         });
     }
@@ -311,6 +442,7 @@ public class JFrameAccueil extends JFrame {
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JButton jButtonValider;
     private javax.swing.JComboBox<String> jComboBoxMois;
+    private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelDateDerniereModif;
     private javax.swing.JLabel jLabelEtatFicheFrais;
     private javax.swing.JLabel jLabelMatricule;
@@ -318,10 +450,22 @@ public class JFrameAccueil extends JFrame {
     private javax.swing.JLabel jLabelSelectMois;
     private javax.swing.JLabel jLabelTitreConsulterFicheFrais;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableHorsClassif;
     private javax.swing.JTextField jTextFieldDateDerniereModif;
     private javax.swing.JTextField jTextFieldEtatFicheFrais;
     private javax.swing.JTextField jTextFieldMatricule;
     private javax.swing.JTextField jTextFieldNomVisiteur;
     // End of variables declaration//GEN-END:variables
+
+    public JTextField getjTextFieldMatricule() {
+        return jTextFieldMatricule;
+    }
+
+    public JTextField getjTextFieldNomVisiteur() {
+        return jTextFieldNomVisiteur;
+    }
+
+
 }

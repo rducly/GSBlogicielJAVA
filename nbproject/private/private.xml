@@ -13,9 +13,11 @@
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Tables/CTableRegion.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CMedicament.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CFrais.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/IHM/JFrameAjoutTypeFrais.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/COffre.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/parametresBdd.properties</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CTravail.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/IHM/JFrameConnexion.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/bdd/CTableTests.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Tables/CTableTypeFrais.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CFicheFrais.java</file>
@@ -24,9 +26,11 @@
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/bdd/CParametresStockageBDD.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CTypeFrais.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Utilitaires/CUtilitaire.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/IHM/JFrameDeclarerFicheFrais.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CPresentation.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/ppe/PPE.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Tables/CTableSecteur.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Metier/CMetierFicheFrais.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/IHM/JFrameAccueil.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CComposant.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/PPEFraisRachel/src/Entite/CPrescription.java</file>
