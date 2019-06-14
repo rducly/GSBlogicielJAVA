@@ -185,8 +185,9 @@ public class JFrameConnexion extends javax.swing.JFrame {
                 CTableTypeFrais tableTypeFrais = new CTableTypeFrais(bdd);
                 CTableFrais tableFrais = new CTableFrais(bdd);
                 CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
-                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais);
-                JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais();
+                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais, tableFrais);
+                JFrameAjoutTypeFrais jFrameAjoutTypeFrais = new JFrameAjoutTypeFrais(metierFicheFrais);
+                 JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais(metierFicheFrais, jFrameAjoutTypeFrais );
                 JFrameAccueil jFrameAccueil = new JFrameAccueil(jFrameDeclarerFicheFrais, metierFicheFrais);
                JFrameConnexion jFrameConnexion = new JFrameConnexion(jFrameAccueil, metierFicheFrais); 
              

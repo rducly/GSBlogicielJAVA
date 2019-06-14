@@ -14,6 +14,7 @@ import Entite.CTravail;
 import Entite.CTypeFrais;
 import Entite.CVisiteur;
 import IHM.JFrameAccueil;
+import IHM.JFrameAjoutTypeFrais;
 import IHM.JFrameConnexion;
 import IHM.JFrameDeclarerFicheFrais;
 import Metier.CMetierFicheFrais;
@@ -54,25 +55,37 @@ public class PPE {
         
         CTableSecteur tableSecteur = new CTableSecteur(bdd);
         
+        CVisiteur visiteur = new CVisiteur();
+        
         CTableTypeFrais tableTypeFrais = new CTableTypeFrais(bdd);
         
         CTableFrais tableFrais = new CTableFrais(bdd);
         
         CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
         
-        CMetierFicheFrais  metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais);
+        CMetierFicheFrais  metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais, tableFrais);
         
-         JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais();
+         JFrameAjoutTypeFrais jFrameAjoutTypeFrais = new JFrameAjoutTypeFrais(metierFicheFrais);
+        
+          JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais(metierFicheFrais, jFrameAjoutTypeFrais );
+                
          
         JFrameAccueil jFrameAccueil = new JFrameAccueil(jFrameDeclarerFicheFrais, metierFicheFrais);
         
         JFrameConnexion jFrameConnexion = new JFrameConnexion(jFrameAccueil, metierFicheFrais); 
         
+        jFrameAjoutTypeFrais.setjFrameDeclarerFicheFrais(jFrameDeclarerFicheFrais);
+        
+        jFrameDeclarerFicheFrais.setjFrameAccueil(jFrameAccueil);
+        
+        jFrameAccueil.setjFrameConnexion(jFrameConnexion);
+        
+        
         
                   
-        CVisiteur visiteur = new CVisiteur();        
+                
 
-        jFrameConnexion.setVisible(true);
+       jFrameConnexion.setVisible(true);
         
        // metierFicheFrais.setTableTypeFrais(tableTypeFrais);
         
@@ -240,7 +253,7 @@ public class PPE {
         
         
         //test inserer , modifier, supprimer ficheFrais
-        //  ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
+        // ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
           //listeFrais.add(frais1);
          
           
@@ -262,6 +275,36 @@ public class PPE {
         //CFicheFrais FicheFraisJanvier = tableFicheFrais.lireUneFicheFraisMois("1234", 1);
         //CFicheFrais FicheFraisId = tableFicheFrais.lireUneFicheFrais(2);
         //String[] tab1 = metierFicheFrais.listeMois("1234");
+        
+        
+        // test methode de modifierFicheFrais de la classe metierFicheFrais
+      /*   ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
+         CTypeFrais typeFrais1 = new CTypeFrais(2,"hebergement", 40.8);
+         CFrais frais1 = new CFrais(3,3,18.3,typeFrais1);
+         listeFrais.add(frais1);
+        CFicheFrais ficheFrais2 = new CFicheFrais(3,3,2,15,"Validée", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-06-08"), listeFrais);
+        metierFicheFrais.modifierFicheFrais(ficheFrais2);
+       */
+      
+      
+      // test recup id max FicheFrais
+     //int iDD =  tableFicheFrais.idMaxFichesFrais();
+     
+     
+          // test methode de ajouterFicheFrais de la classe metierFicheFrais
+       /* ArrayList<CFrais> listeFrais = new ArrayList(); //creation d'une liste de frais
+         CTypeFrais typeFrais1 = new CTypeFrais(2,"hebergement", 40.8);
+         CFrais frais1 = new CFrais(0,2,14,typeFrais1);
+         listeFrais.add(frais1);
+        CFicheFrais ficheFrais2 = new CFicheFrais(4,3,25,"Saisie en cours", "1234", CUtilitaire.convertSQLDatetoGregCal("2019-06-08"), listeFrais);
+        metierFicheFrais.ajouterFicheFrais(ficheFrais2);
+        */
+        
+        //test methode de supprimerFicheFrais
+       // metierFicheFrais.supprimerFicheFrais(8);
+       
+       
+        
         System.out.println("hello");
         
         

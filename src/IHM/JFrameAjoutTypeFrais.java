@@ -17,6 +17,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -26,6 +30,16 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
         // declaration des attributs
    
     protected CMetierFicheFrais metierFicheFrais;
+     protected JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais;
+
+    public JFrameDeclarerFicheFrais getjFrameDeclarerFicheFrais() {
+        return jFrameDeclarerFicheFrais;
+    }
+
+    public void setjFrameDeclarerFicheFrais(JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais) {
+        this.jFrameDeclarerFicheFrais = jFrameDeclarerFicheFrais;
+    }
+   
 
 
     public CMetierFicheFrais getMetierFicheFrais() {
@@ -81,21 +95,26 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
         jLabelMois3 = new javax.swing.JLabel();
         jButtonEnregistrer = new javax.swing.JButton();
         jComboBoxTypeFrais = new javax.swing.JComboBox<>();
+        jButtonRetour = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabelNomVisiteur.setText("Nom du visiteur:");
 
+        jTextFieldNomVisiteur.setEditable(false);
         jTextFieldNomVisiteur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNomVisiteurActionPerformed(evt);
             }
         });
 
+        jTextFieldMatricule.setEditable(false);
+
         jLabelMatricule.setText("Matricule:");
 
         jLabeltitre.setText("Ajout d’un type de frais forfaitisé ");
 
+        jTextFieldMois.setEditable(false);
         jTextFieldMois.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldMoisActionPerformed(evt);
@@ -131,6 +150,13 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
             }
         });
 
+        jButtonRetour.setText("Retour");
+        jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRetourActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,8 +171,8 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,7 +181,8 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(376, 376, 376)
                         .addComponent(jLabeltitre, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRetour)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(258, 258, 258)
@@ -186,7 +213,9 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
                     .addComponent(jLabelMatricule)
                     .addComponent(jTextFieldMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
-                .addComponent(jLabeltitre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabeltitre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRetour))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelMois, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,6 +259,11 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTypeFraisActionPerformed
 
+    private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
+        this.setVisible(false);
+        jFrameDeclarerFicheFrais.setVisible(true);
+    }//GEN-LAST:event_jButtonRetourActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -265,7 +299,7 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
                 CTableTypeFrais tableTypeFrais = new CTableTypeFrais(bdd);
                 CTableFrais tableFrais = new CTableFrais(bdd);
                 CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
-                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais);
+                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais, tableFrais);
                 
                 JFrameAjoutTypeFrais jFrameAjoutTypeFrais = new JFrameAjoutTypeFrais(metierFicheFrais);
                 jFrameAjoutTypeFrais.setVisible(true);
@@ -273,8 +307,121 @@ public class JFrameAjoutTypeFrais extends javax.swing.JFrame {
         });
     }
 
+    public JButton getjButtonEnregistrer() {
+        return jButtonEnregistrer;
+    }
+
+    public void setjButtonEnregistrer(JButton jButtonEnregistrer) {
+        this.jButtonEnregistrer = jButtonEnregistrer;
+    }
+
+    public JComboBox<String> getjComboBoxTypeFrais() {
+        return jComboBoxTypeFrais;
+    }
+
+    public void setjComboBoxTypeFrais(JComboBox<String> jComboBoxTypeFrais) {
+        this.jComboBoxTypeFrais = jComboBoxTypeFrais;
+    }
+
+    public JLabel getjLabelMatricule() {
+        return jLabelMatricule;
+    }
+
+    public void setjLabelMatricule(JLabel jLabelMatricule) {
+        this.jLabelMatricule = jLabelMatricule;
+    }
+
+    public JLabel getjLabelMois() {
+        return jLabelMois;
+    }
+
+    public void setjLabelMois(JLabel jLabelMois) {
+        this.jLabelMois = jLabelMois;
+    }
+
+    public JLabel getjLabelMois1() {
+        return jLabelMois1;
+    }
+
+    public void setjLabelMois1(JLabel jLabelMois1) {
+        this.jLabelMois1 = jLabelMois1;
+    }
+
+    public JLabel getjLabelMois2() {
+        return jLabelMois2;
+    }
+
+    public void setjLabelMois2(JLabel jLabelMois2) {
+        this.jLabelMois2 = jLabelMois2;
+    }
+
+    public JLabel getjLabelMois3() {
+        return jLabelMois3;
+    }
+
+    public void setjLabelMois3(JLabel jLabelMois3) {
+        this.jLabelMois3 = jLabelMois3;
+    }
+
+    public JLabel getjLabelNomVisiteur() {
+        return jLabelNomVisiteur;
+    }
+
+    public void setjLabelNomVisiteur(JLabel jLabelNomVisiteur) {
+        this.jLabelNomVisiteur = jLabelNomVisiteur;
+    }
+
+    public JLabel getjLabeltitre() {
+        return jLabeltitre;
+    }
+
+    public void setjLabeltitre(JLabel jLabeltitre) {
+        this.jLabeltitre = jLabeltitre;
+    }
+
+    public JTextField getjTextFieldMatricule() {
+        return jTextFieldMatricule;
+    }
+
+    public void setjTextFieldMatricule(JTextField jTextFieldMatricule) {
+        this.jTextFieldMatricule = jTextFieldMatricule;
+    }
+
+    public JTextField getjTextFieldMois() {
+        return jTextFieldMois;
+    }
+
+    public void setjTextFieldMois(JTextField jTextFieldMois) {
+        this.jTextFieldMois = jTextFieldMois;
+    }
+
+    public JTextField getjTextFieldMois2() {
+        return jTextFieldMois2;
+    }
+
+    public void setjTextFieldMois2(JTextField jTextFieldMois2) {
+        this.jTextFieldMois2 = jTextFieldMois2;
+    }
+
+    public JTextField getjTextFieldMois3() {
+        return jTextFieldMois3;
+    }
+
+    public void setjTextFieldMois3(JTextField jTextFieldMois3) {
+        this.jTextFieldMois3 = jTextFieldMois3;
+    }
+
+    public JTextField getjTextFieldNomVisiteur() {
+        return jTextFieldNomVisiteur;
+    }
+
+    public void setjTextFieldNomVisiteur(JTextField jTextFieldNomVisiteur) {
+        this.jTextFieldNomVisiteur = jTextFieldNomVisiteur;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEnregistrer;
+    private javax.swing.JButton jButtonRetour;
     private javax.swing.JComboBox<String> jComboBoxTypeFrais;
     private javax.swing.JLabel jLabelMatricule;
     private javax.swing.JLabel jLabelMois;

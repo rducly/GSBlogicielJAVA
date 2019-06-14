@@ -49,6 +49,17 @@ public class JFrameAccueil extends JFrame {
     protected CTableFicheFrais tableFicheFrais;
     protected CMetierFicheFrais metierFicheFrais;
     protected JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais;
+    protected JFrameAjoutTypeFrais jFrameAjoutTypeFrais;
+    protected JFrameConnexion jFrameConnexion;
+
+    public JFrameConnexion getjFrameConnexion() {
+        return jFrameConnexion;
+    }
+
+    public void setjFrameConnexion(JFrameConnexion jFrameConnexion) {
+        this.jFrameConnexion = jFrameConnexion;
+    }
+    
     
     public void setjFrameDeclarerFicheFrais(JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais) {
         this.jFrameDeclarerFicheFrais = jFrameDeclarerFicheFrais;
@@ -125,11 +136,13 @@ public class JFrameAccueil extends JFrame {
         jLabelDate = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableHorsClassif = new javax.swing.JTable();
+        jButtonDeconnexion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabelNomVisiteur.setText("Nom du visiteur:");
 
+        jTextFieldNomVisiteur.setEditable(false);
         jTextFieldNomVisiteur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNomVisiteurActionPerformed(evt);
@@ -137,6 +150,8 @@ public class JFrameAccueil extends JFrame {
         });
 
         jLabelMatricule.setText("Matricule:");
+
+        jTextFieldMatricule.setEditable(false);
 
         jLabelTitreConsulterFicheFrais.setText("Consulter mes fiches de frais");
 
@@ -227,34 +242,40 @@ public class JFrameAccueil extends JFrame {
         });
         jScrollPane2.setViewportView(jTableHorsClassif);
 
+        jButtonDeconnexion.setText("Deconnexion");
+        jButtonDeconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeconnexionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelEtatFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(619, 619, 619))
+                        .addComponent(jTextFieldEtatFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelSelectMois, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(jButtonValider))
+                                .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelEtatFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldEtatFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelTitreConsulterFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGap(17, 17, 17)
+                                .addComponent(jTextFieldNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)
+                        .addComponent(jButtonValider)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                .addComponent(jLabelTitreConsulterFicheFrais, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -280,10 +301,15 @@ public class JFrameAccueil extends JFrame {
                             .addComponent(jTextFieldMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(296, 296, 296))
             .addGroup(layout.createSequentialGroup()
-                .addGap(225, 225, 225)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonDeconnexion)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -295,7 +321,9 @@ public class JFrameAccueil extends JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldNomVisiteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(51, 51, 51)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonDeconnexion)
+                        .addGap(17, 17, 17)
                         .addComponent(jLabelTitreConsulterFicheFrais)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -349,7 +377,7 @@ public class JFrameAccueil extends JFrame {
         // metier.valider(this.jTextFieldMatricule.getText(),this.jComboBoxMois.getSelectedItem(),this.jTable1);              
 
         // on récupère la fiche frais de type CFicheFrais correspondant au matricule et mois choisis
-        ArrayList<CFicheFrais> list = metierFicheFrais.valider(this.jTextFieldMatricule.getText(), this.jComboBoxMois.getSelectedIndex());
+        ArrayList<CFicheFrais> list = metierFicheFrais.valider(this.jTextFieldMatricule.getText(), this.jComboBoxMois.getSelectedIndex()+1);
 
         //pour afficher l'etape de la fiche de frais dans le champ EtatFicheFrais
         jTextFieldEtatFicheFrais.setText(list.get(0).getEtape());
@@ -388,6 +416,16 @@ public class JFrameAccueil extends JFrame {
         
     }//GEN-LAST:event_jButtonNouvelleFicheActionPerformed
 
+    private void jButtonDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeconnexionActionPerformed
+        this.setVisible(false);
+        this.metierFicheFrais.setNomVisiteur("");
+      this.metierFicheFrais.setMatricule("");
+      this.jFrameConnexion.getjTextFieldNom().setText(this.metierFicheFrais.getMatricule());
+      this.jFrameConnexion.getjPasswordFieldMdp().setText(this.metierFicheFrais.getNomVisiteur());
+      
+        jFrameConnexion.setVisible(true);
+    }//GEN-LAST:event_jButtonDeconnexionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -423,10 +461,11 @@ public class JFrameAccueil extends JFrame {
                 CTableTypeFrais tableTypeFrais = new CTableTypeFrais(bdd);
                 CTableFrais tableFrais = new CTableFrais(bdd);
                 CTableFicheFrais tableFicheFrais = new CTableFicheFrais(bdd, tableFrais);
-                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais);
-                 JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais();
+                CMetierFicheFrais metierFicheFrais = new CMetierFicheFrais(tableFicheFrais, tableTypeFrais, tableFrais);
+                JFrameAjoutTypeFrais jFrameAjoutTypeFrais = new JFrameAjoutTypeFrais(metierFicheFrais);
+                 JFrameDeclarerFicheFrais jFrameDeclarerFicheFrais = new JFrameDeclarerFicheFrais(metierFicheFrais, jFrameAjoutTypeFrais );
                 JFrameAccueil jFrameAccueil = new JFrameAccueil(jFrameDeclarerFicheFrais, metierFicheFrais);
-                // jFrameAccueil.bdd=new CBDD(new CParametresStockageBDD("parametresBdd.properties"));
+                //jFrameAccueil.bdd=new CBDD(new CParametresStockageBDD("parametresBdd.properties"));
 
                 // jFrameAccueil.tableTypeFrais = new CTableTypeFrais(jFrameAccueil.bdd);
                 // jFrameAccueil.tableFrais = new CTableFrais(jFrameAccueil.bdd);
@@ -437,6 +476,7 @@ public class JFrameAccueil extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonDeconnexion;
     private javax.swing.JButton jButtonModifier;
     private javax.swing.JButton jButtonNouvelleFiche;
     private javax.swing.JButton jButtonSupprimer;

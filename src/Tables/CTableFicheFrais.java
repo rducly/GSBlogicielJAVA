@@ -56,7 +56,7 @@ public class CTableFicheFrais {
 
 
     public int insererFicheFrais(CFicheFrais FicheFrais) {
-        /*lecture id*/
+        
         Date dateDerniereModif = new Date(FicheFrais.getDateDerniereModif().getTimeInMillis());
         
         
@@ -78,13 +78,16 @@ public class CTableFicheFrais {
             System.out.println("Connexion KO");
         }
         
-        /*lecture id =idFF
+        //lecture id 
+       int idFF =idMaxFichesFrais();
+       
+        
         
         for (int i = 0; i < FicheFrais.getListeFrais().size(); i++) {
             FicheFrais.getListeFrais().get(i).setIdFicheFrais(idFF);
             this.tableFrais.insererFrais(FicheFrais.getListeFrais().get(i));
         }
-        */
+        
         return res;
     }
 
@@ -166,7 +169,8 @@ public class CTableFicheFrais {
     public ArrayList<CFicheFrais> fetchFichesFrais(String matricule) {
         if (bdd.connecter() == true) {
             ArrayList<CFicheFrais> liste = new ArrayList();
-            ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais` WHERE fiche_frais.VIS_MATRICULE_VISITEUR="+ matricule +" AND fiche_frais.FF_ID_FICHE_FRAIS=inclure.FF_ID_FICHE_FRAIS AND inclure.TF_CODE_TYPE_FRAIS=type_frais.TF_CODE_TYPE_FRAIS ;");
+            ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais`  WHERE fiche_frais.VIS_MATRICULE_VISITEUR="+ matricule +" ;");
+            //ResultSet rs = bdd.executerRequeteQuery("SELECT * FROM `fiche_frais` ,`inclure`, `type_frais` WHERE fiche_frais.VIS_MATRICULE_VISITEUR="+ matricule +" AND fiche_frais.FF_ID_FICHE_FRAIS=inclure.FF_ID_FICHE_FRAIS AND inclure.TF_CODE_TYPE_FRAIS=type_frais.TF_CODE_TYPE_FRAIS ;");
             try {
                 while (rs.next()) {
                    CFicheFrais FicheFrais = convertir_RS_FicheFrais(rs);
@@ -184,7 +188,28 @@ public class CTableFicheFrais {
         return null;
     }
     
-    
+  
+      //methode qui permet d'avoir le dernier idFicheFrais enregistré
+    public int idMaxFichesFrais() {
+        if (bdd.connecter() == true) {
+            int idMaxFF=0;
+            ResultSet rs1 =  bdd.executerRequeteQuery("SELECT MAX(FF_ID_FICHE_FRAIS) AS maxID FROM `fiche_frais` ;");
+            try {
+                while (rs1.next()) {
+                    idMaxFF = rs1.getInt("maxID");
+                
+                }
+            } catch (SQLException ex) {
+            }
+            bdd.deconnecter();
+           
+            
+            return idMaxFF;
+        } else {
+            System.out.println("Connexion KO");
+        }
+        return 0;
+    }
     
     
     

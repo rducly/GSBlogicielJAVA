@@ -6,8 +6,10 @@
 package Metier;
 
 import Entite.CFicheFrais;
+import Entite.CFrais;
 import Entite.CTypeFrais;
 import Tables.CTableFicheFrais;
+import Tables.CTableFrais;
 import Tables.CTableTypeFrais;
 import bdd.CBDD;
 import bdd.CParametresStockageBDD;
@@ -48,6 +50,14 @@ public class CMetierFicheFrais {
     public String getMatricule() {
         return matricule;
     }
+    
+    public CTableFrais getTableFrais() {
+        return tableFrais;
+    }
+
+    public void setTableFrais(CTableFrais tableFrais) {
+        this.tableFrais = tableFrais;
+    }
 
     // attributs
     public void setMatricule(String matricule) {
@@ -55,13 +65,15 @@ public class CMetierFicheFrais {
     }
           CTableFicheFrais tableFicheFrais ;
           CTableTypeFrais tableTypeFrais;
+          CTableFrais tableFrais;
           String nomVisiteur;
           String matricule;
           
           
-          public CMetierFicheFrais (CTableFicheFrais tableFicheFrais,  CTableTypeFrais tableTypeFrais) {
+          public CMetierFicheFrais (CTableFicheFrais tableFicheFrais,  CTableTypeFrais tableTypeFrais, CTableFrais tableFrais) {
               this.tableFicheFrais= tableFicheFrais;
               this.tableTypeFrais = tableTypeFrais;
+              this.tableFrais = tableFrais;
           }
           
          /* public void valider(String matricule, String mois, JTable table){
@@ -70,7 +82,7 @@ public class CMetierFicheFrais {
           
           // methode permettant de récupérer la fiche de frais correspondant à un mois et un matricule dans une liste
           public ArrayList<CFicheFrais> valider(String matricule, int mois){
-              return this.tableFicheFrais.fetchTravailsMois(matricule, mois+1);
+              return this.tableFicheFrais.fetchTravailsMois(matricule, mois);
           }
           
           
@@ -112,4 +124,42 @@ public class CMetierFicheFrais {
               
               return tableauFrais;
           }
+          
+          
+          // permet d'ajouter une fiche de frais
+          public void ajouterFicheFrais(CFicheFrais ficheFrais) {
+              this.tableFicheFrais.insererFicheFrais(ficheFrais);
+          }
+          
+          // permet de modifier une fiche de frais
+          public void modifierFicheFrais(CFicheFrais ficheFrais) {
+              this.tableFicheFrais.modifierFicheFrais(ficheFrais);
+              int nbFrais = ficheFrais.getListeFrais().size();
+              for (int i = 0; i < nbFrais; i++) {
+                  this.tableFrais.modifierFrais(ficheFrais.getListeFrais().get(i));
+              }
+          }
+          
+        /*  // permet de supprimer une fiche de frais
+          public void supprimerFicheFrais (ArrayList<CFrais> listeFrais){
+              for (int i = 0; i < listeFrais.size(); i++) {
+                 this.tableFrais.supprimerFrais(listeFrais.get(i).getIdFicheFrais(), listeFrais.get(i).getTypeFrais().getCode()); 
+              }
+              
+              this.tableFicheFrais.supprimerFicheFrais(listeFrais.get(0).getIdFicheFrais());
+              
+          }*/
+          
+            // permet de supprimer une fiche de frais
+          public void supprimerFicheFrais (int idFicheFrais){
+             CFicheFrais ficheFrais =  this.tableFicheFrais.lireUneFicheFrais(idFicheFrais);
+             ArrayList<CFrais> listeFrais = ficheFrais.getListeFrais();
+              for (int i = 0; i < listeFrais.size(); i++) {
+                 this.tableFrais.supprimerFrais(listeFrais.get(i).getIdFicheFrais(), listeFrais.get(i).getTypeFrais().getCode()); 
+              }
+              
+              this.tableFicheFrais.supprimerFicheFrais(idFicheFrais);
+              
+          }
+
 }
